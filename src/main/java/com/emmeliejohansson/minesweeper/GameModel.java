@@ -1,64 +1,62 @@
 package com.emmeliejohansson.minesweeper;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+
 
 public class GameModel {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
-    private static final int Y_TILES = HEIGHT / Tile.SIZE;
-    private static final int X_TILES = WIDTH / Tile.SIZE;
-    private Tile[][] gameField = new Tile[Y_TILES][X_TILES];
-    private int countMinesOnField;
-    private int countFlags;
-    private static final String MINE = "\uD83D\uDCA3";
-    private static final String FLAG = "\uD83D\uDEA9";
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 800;
 
-    public void createGame() {
+    private boolean isGameStopped = false;
+
+    private final int Y_TILES = HEIGHT / Tile.SIZE;
+
+    private final int X_TILES = WIDTH / Tile.SIZE;
+
+    private Tile[][] gameField = new Tile[Y_TILES][X_TILES];
+
+    public int getY_TILES() {
+        return Y_TILES;
+    }
+
+    public int getX_TILES() {
+        return X_TILES;
+    }
+
+    public boolean isGameStopped() {
+        return isGameStopped;
+    }
+
+    public Tile[][] getGameField() {
+        return gameField;
+    }
+
+
+    public Parent createContent() {
+        Pane root = new Pane();
+        root.setPrefSize(GameModel.WIDTH, GameModel.HEIGHT);
+
         for (int yPos = 0; yPos < Y_TILES; yPos++) {
             for (int xPos = 0; xPos < X_TILES; xPos++) {
-                boolean isMine = Math.random() < 0.2;
-                if (isMine) {
-                    countMinesOnField++;
-                }
-                gameField[yPos][xPos] = new Tile(xPos, yPos, isMine);
-            }
-            countMineNeighbors();
-            countFlags = countMinesOnField;
-        }
-    }
-
-    private List<Tile> getNeighbors (Tile gameCell){
-        List<Tile> result = new ArrayList<>();
-        for (int y = gameCell.getYPos() - 1; y <= gameCell.getYPos() + 1; y++) {
-            for (int x = gameCell.getXPos() - 1; x <= gameCell.getXPos() + 1; x++) {
-                if (y < 0 || y >= Y_TILES) {
-                    continue;
-                }
-                if (x < 0 || x >= X_TILES) {
-                    continue;
-                }
-                if (x == gameCell.getXPos() && y == gameCell.getYPos()) {
-                    continue;
-                }
-                result.add(gameField[y][x]);
+                Tile tile = new Tile(xPos, yPos, Math.random() < 0.2, this);
+                gameField[yPos][xPos] = tile;
+                root.getChildren().add(tile);
             }
         }
-        return result;
-    }
 
-    private void countMineNeighbors() {
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                Tile tile = gameField[y][x];
-
-                if (!tile.isMine()) {
-                    tile.nrOfMineNeighbors = Math.toIntExact(getNeighbors(tile).
-                            stream().filter(neighbor -> neighbor.isMine()).count());
-                }
+        for (int yPos = 0; yPos < Y_TILES; yPos++) {
+            for (int xPos = 0; xPos < X_TILES; xPos++) {
+                Tile tile = gameField[yPos][xPos];
+                if (tile.isMine()) continue;
+                long mines = tile.getNeighbors().stream().filter(Tile::isMine).count();
+                if (mines > 0)  tile.getText().setText(String.valueOf(mines));
             }
         }
+        return root;
     }
 
-
+    public void gameOver() {
+        isGameStopped = true;
+    }
 }

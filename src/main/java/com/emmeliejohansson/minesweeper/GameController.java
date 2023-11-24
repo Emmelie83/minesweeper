@@ -1,12 +1,8 @@
 package com.emmeliejohansson.minesweeper;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class GameController {
     @FXML
@@ -21,7 +17,6 @@ public class GameController {
 
 
     public void initialize() {
-        gameModel.createGame();
     }
 
 

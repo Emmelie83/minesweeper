@@ -1,19 +1,15 @@
 package com.emmeliejohansson.minesweeper;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MinesweeperApplication extends Application {
+
+    GameModel gameModel = new GameModel();
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MinesweeperApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    public void start(Stage stage) {
+        Scene scene = new Scene(gameModel.createContent());
         stage.setTitle("Minesweeper");
         stage.setScene(scene);
         stage.show();
