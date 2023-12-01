@@ -1,8 +1,9 @@
 package com.emmeliejohansson.minesweeper;
 
 import javafx.scene.Parent;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.TextAlignment;
 
 
 public class GameModel {
@@ -30,7 +31,7 @@ public class GameModel {
     public Tile[][] getGameField() {
         return gameField;
     }
-    TextField textField = new TextField();
+    Label label = new Label();
 
     public Parent createContent() {
         Pane root = new Pane();
@@ -47,9 +48,9 @@ public class GameModel {
             }
         }
 
-        root.getChildren().add(textField);
-        textField.setText("Game over");
-        textField.setVisible(false);
+        root.getChildren().add(label);
+        label.setText("Game over");
+        label.setVisible(false);
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
                 Tile tile = gameField[yPos][xPos];
@@ -76,6 +77,6 @@ public class GameModel {
     }
     public void gameWon() {
         isGameStopped = true;
-        textField.setVisible(true);
+        label.setVisible(true);
     }
 }
