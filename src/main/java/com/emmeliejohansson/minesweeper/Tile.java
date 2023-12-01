@@ -87,13 +87,13 @@ public class Tile extends StackPane {
             text.setText(FLAG);
             text.setFill(Color.RED);
             isFlag = true;
+            gameModel.checkNrOfClosedTiles();
         } else {
             text.setVisible(false);
             text.setText(text2.getText());
             text.setFill(Color.BLACK);
             isFlag = false;
         }
-        gameModel.checkNrOfClosedTiles();
     }
 
     public void showMine() {

@@ -49,7 +49,7 @@ public class GameModel {
         }
 
         root.getChildren().add(label);
-        label.setText("Game over");
+        label.setText("You won!");
         label.setVisible(false);
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
