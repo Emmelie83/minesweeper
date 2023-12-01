@@ -1,8 +1,8 @@
 package com.emmeliejohansson.minesweeper;
 
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 
 public class GameModel {
@@ -30,11 +30,12 @@ public class GameModel {
     public Tile[][] getGameField() {
         return gameField;
     }
-
+    TextField textField = new TextField();
 
     public Parent createContent() {
         Pane root = new Pane();
         root.setPrefSize(GameModel.WIDTH, GameModel.HEIGHT);
+
 
         for (int yPos = 0; yPos < Y_TILES; yPos++) {
             for (int xPos = 0; xPos < X_TILES; xPos++) {
@@ -42,9 +43,13 @@ public class GameModel {
                 if (tile.isMine()) nrOfMinesOnField++;
                 gameField[yPos][xPos] = tile;
                 root.getChildren().add(tile);
+
             }
         }
 
+        root.getChildren().add(textField);
+        textField.setText("Game over");
+        textField.setVisible(false);
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
                 Tile tile = gameField[yPos][xPos];
@@ -65,11 +70,12 @@ public class GameModel {
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
                 Tile tile = gameField[yPos][xPos];
-                if (tile.isMine()) tile.showMines();
+                if (tile.isMine()) tile.showMine();
             }
         isGameStopped = true;
     }
     public void gameWon() {
         isGameStopped = true;
+        textField.setVisible(true);
     }
 }

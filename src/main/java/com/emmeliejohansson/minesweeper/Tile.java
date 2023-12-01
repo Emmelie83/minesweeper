@@ -63,10 +63,11 @@ public class Tile extends StackPane {
     }
 
     public void open() {
+
+        gameModel.checkNrOfClosedTiles();
         if (isOpen || gameModel.isGameStopped() || isFlag) return;
         if (isMine) gameModel.gameOver();
         else {
-            gameModel.checkNrOfClosedTiles();
             isOpen = true;
             text.setVisible(true);
             rectangle.setFill(Color.GREY);
@@ -92,9 +93,10 @@ public class Tile extends StackPane {
             text.setFill(Color.BLACK);
             isFlag = false;
         }
+        gameModel.checkNrOfClosedTiles();
     }
 
-    public void showMines() {
+    public void showMine() {
         text.setText(MINE);
         text.setVisible(true);
         text.setFill(Color.BLACK);
