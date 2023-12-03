@@ -1,8 +1,12 @@
 package com.emmeliejohansson.minesweeper;
 
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 
@@ -50,6 +54,8 @@ public class GameModel {
 
         root.getChildren().add(label);
         label.setText("You won!");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 60));
+        label.setTextAlignment(TextAlignment.CENTER);
         label.setVisible(false);
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
@@ -73,6 +79,7 @@ public class GameModel {
                 Tile tile = gameField[yPos][xPos];
                 if (tile.isMine()) tile.showMine();
             }
+        label.setVisible(true);
         isGameStopped = true;
     }
     public void gameWon() {
