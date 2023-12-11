@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tile extends StackPane {
-    public static final int SIZE = 40;
+    public static final int SIZE = 30;
     private final int xPos;
     private final int yPos;
     private boolean isMine;
@@ -63,8 +63,6 @@ public class Tile extends StackPane {
     }
 
     public void open() {
-
-        gameModel.checkNrOfClosedTiles();
         if (isOpen || gameModel.isGameStopped() || isFlag) return;
         if (isMine) gameModel.gameOver();
         else {
@@ -72,6 +70,7 @@ public class Tile extends StackPane {
             text.setVisible(true);
             rectangle.setFill(Color.GREY);
             gameModel.decreaseNrOfClosedTiles();
+            gameModel.checkNrOfClosedTiles();
         }
         if (text.getText().isEmpty()) {
             getNeighbors().forEach(Tile::open);

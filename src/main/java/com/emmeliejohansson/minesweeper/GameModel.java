@@ -1,9 +1,11 @@
 package com.emmeliejohansson.minesweeper;
 
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -11,8 +13,8 @@ import javafx.scene.text.TextAlignment;
 
 
 public class GameModel {
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
     private boolean isGameStopped = false;
     private final int Y_TILES = HEIGHT / Tile.SIZE;
     private final int X_TILES = WIDTH / Tile.SIZE;
@@ -53,9 +55,11 @@ public class GameModel {
         }
 
         root.getChildren().add(label);
-        label.setText("You won!");
-        label.setFont(Font.font("Arial", FontWeight.BOLD, 60));
-        label.setTextAlignment(TextAlignment.CENTER);
+        label.setText("Game over!");
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 80));
+        label.setTextFill(Color.YELLOW);
+        label.setPrefSize(WIDTH, HEIGHT);
+        label.setAlignment(Pos. CENTER);
         label.setVisible(false);
         for (int yPos = 0; yPos < Y_TILES; yPos++)
             for (int xPos = 0; xPos < X_TILES; xPos++) {
@@ -83,7 +87,9 @@ public class GameModel {
         isGameStopped = true;
     }
     public void gameWon() {
-        isGameStopped = true;
+        label.setText("You won!");
         label.setVisible(true);
+        isGameStopped = true;
+
     }
 }
